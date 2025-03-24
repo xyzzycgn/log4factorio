@@ -36,16 +36,18 @@ function Log.setFromSettings(setting)
     severity = Log[settings.global[setting].value] or DEFAULT
 end
 
-function Log.log(msg, func, sev)
+function Log.log(msgOrFunction, func, sev)
     sev = sev or DEFAULT
     if (sev >= severity) then
+        local msg = (type(msgOrFunction) == "function") and msgOrFunction() or msgOrFunction
         func(MSG[sev] .. (msg or "<NIL>"))
     end
 end
 
-function Log.logBlock(msg, func, sev)
+function Log.logBlock(msgOrFunction, func, sev)
     sev = sev or DEFAULT
     if (sev >= severity) then
+        local msg = (type(msgOrFunction) == "function") and msgOrFunction() or msgOrFunction
         func(MSG[sev] .. serpent.block(msg))
     end
 end
