@@ -1,0 +1,10 @@
+mod_info:
+#  description_file: README.md
+  summary: facility for logging in a mod
+  title: log4factorio
+  attach_source_link: true
+  license: mit
+  category: internal
+#  tags:
+#    - logistics
+#    - trains
