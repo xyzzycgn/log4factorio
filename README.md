@@ -33,12 +33,12 @@ others will produce no log entries.
 
     `local Log = require("__log4factorio__.Log")`
 1. set the desired log level, either 
-   1. from configuration
+   * from configuration
         
-     `Log.setSeverityFromSettings("testmod1-logLevel")`
-   1. or hard coded
+   `Log.setSeverityFromSettings("testmod1-logLevel")`
+   * or hard coded
         
-     `Log.setSeverity(Log.WARN)`
+   `Log.setSeverity(Log.WARN)`
 1. if using configuration add the appropiate entries to the locale files resp. to settings.lua
 
     ```
@@ -72,7 +72,7 @@ others will produce no log entries.
       },
     })
     ```
-![settings](https://github.com/xyzzycgn/log4factorio/blob/main/settings.jpg?raw=true)
+    ![settings](https://github.com/xyzzycgn/log4factorio/blob/main/settings.jpg?raw=true)
 
     For more details please have a look at https://wiki.factorio.com/Tutorial:Mod_settings#Locale
 
