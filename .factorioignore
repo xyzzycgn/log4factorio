@@ -1,0 +1,15 @@
+.git/
+.github/
+.gitignore
+.log
+.tmp
+.vscode/
+*.bak
+*.tmp
+*.tmp.*
+.idea/
+*.iml
+.factorioignore
+settings.jpg
+mod_info.yml
+
