@@ -1,5 +1,5 @@
---- Created by xyzzycgn.
---- DateTime: 17.01.25 08:45
+---
+--- Slim logging facility with the ability to change the amount of logged statements at runtime.
 ---
 
 
@@ -40,8 +40,10 @@ end
 
 ---Sets the severity level from game settings
 ---@param setting string The name of the setting to read from settings.global
-function Log.setFromSettings(setting)
-    severity = Log[settings.global[setting].value] or DEFAULT
+function Log.setSeverityFromSettings(setting)
+    if (settings.global[setting] and settings.global[setting].value) then
+        severity = Log[settings.global[setting].value] or DEFAULT
+    end
 end
 
 ---Logs a message with the specified severity level
