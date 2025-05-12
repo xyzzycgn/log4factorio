@@ -3,7 +3,7 @@
   "title": "logging for factorio",
   "description": "inspired by log4j (but with much less functionality)",
   "author": "xyzzycgn",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/xyzzycgn/log4factorio.git",
   "factorio_version": "2.0",
   "dependencies": [
