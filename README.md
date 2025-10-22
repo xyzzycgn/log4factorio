@@ -91,9 +91,9 @@ others will produce no log entries.
 
    `Log.logBlock(data, function(m)log(m)end, Log.FINEST)`
 
-That produces entries in factorio-current.log like
+Assuming that the log level has been set to INFO, that produces entries in factorio-current.log like
 
-` 137.987 Script @__testMod1__/control.lua:16: [FINE] sth happened`
+` 137.987 Script @__testMod1__/control.lua:16: [INFO] sth happened`
 
 **Hint**: If you want to log to the factorio-current.log, use `function(m)log(m)end` instead of simply `log`. That offers
 the advantage that the logged line number is that from the call in the mod using log4factorio and not the line number

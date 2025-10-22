@@ -82,11 +82,12 @@ function Log.logLine(msgOrFunction, func, sev)
     end
 end
 
----Logs a message using string.format to build the logmessage
----@param func function Function to use for logging (e.g., game.print)
----@param sev number Severity level
----@param format string formating string used for string.format to build the logmessage
----@param ...? varargs with the optional parameters used for string.format
+--- logs a message using string.format to build the logmessage
+--- @param func function Function to use for logging (e.g., game.print)
+--- @param sev number Severity level
+--- @param format string formating string used for string.format to build the logmessage
+--- @param ...? varargs with the optional parameters used for string.format
+--- @since 0.2.0
 function Log.logMsg(func, sev, format, ...)
     if (sev >= severity) then
         func(MSG[sev] .. string.format(format, ...))
@@ -96,7 +97,8 @@ end
 --- logs an event and transforms the event number (event.name) to the corresponding identifier for more readability
 --- @param event EventData the event to be logged
 --- @param func function Function to use for logging (e.g., game.print)
----@param sev number? Severity level
+--- @param sev number? Severity level
+--- @since 0.2.0
 function Log.logEvent(event, func, sev)
     Log.logLine(function() return dump.dumpEvent(event) end, func, sev)
 end
@@ -105,7 +107,8 @@ end
 --- logs a LuaEntity with more details
 --- @param entity LuaEntity to be logged
 --- @param func function Function to use for logging (e.g., game.print)
----@param sev number? Severity level
+--- @param sev number? Severity level
+--- @since 0.2.0
 function Log.logEntity(entity, func, sev)
     Log.logBlock(function() return dump.dumpEntity(entity) end, func, sev)
 end
@@ -114,7 +117,8 @@ end
 --- logs a LuaGuiElement with more details
 --- @param lge LuaGuiElement to be logged
 --- @param func function function to use for logging (e.g., game.print)
----@param sev number? Severity level
+--- @param sev number? Severity level
+--- @since 0.2.0
 function Log.logLuaGuiElement(lge, func, sev)
     Log.logBlock(function() return dump.dumpLuaGuiElement(lge) end, func, sev)
 end
@@ -123,7 +127,8 @@ end
 --- logs a ControlBehaviour with more details
 --- @param cb ControlBehaviour to be logged
 --- @param func function function to use for logging (e.g., game.print)
----@param sev number? Severity level
+--- @param sev number? Severity level
+--- @since 0.2.0
 function Log.logLuaGuiElement(cb, func, sev)
     Log.logBlock(function() return dump.dumpControlBehavior(cb) end, func, sev)
 end
