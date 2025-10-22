@@ -129,10 +129,9 @@ end
 --- @param func function function to use for logging (e.g., game.print)
 --- @param sev number? Severity level
 --- @since 0.2.0
-function Log.logLuaGuiElement(cb, func, sev)
+function Log.logLControlBehavior(cb, func, sev)
     Log.logBlock(function() return dump.dumpControlBehavior(cb) end, func, sev)
 end
-
 
 
 return Log
