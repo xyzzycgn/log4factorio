@@ -39,6 +39,21 @@ local function getTypeName(types, value)
 end
 -- ###############################################################
 
+--- @param quality LuaQualityPrototype
+local function dumpQuality(quality)
+    if quality.valid then
+        local q = {
+            level = quality.level,
+            next = quality.next,
+            range_multiplier = quality.range_multiplier,
+        }
+        return q
+    end
+
+    return quality
+end
+-- ###############################################################
+
 --- @param entity LuaEntity
 --- @param is_turret boolean
 local function dumpEntity(entity, is_turret)
@@ -52,6 +67,7 @@ local function dumpEntity(entity, is_turret)
             type = entity.type,
             position = entity.position,
             prototype = entity.prototype,
+            quality = dumpQuality(entity.quality),
             gps_tag = entity.gps_tag,
             destructible = entity.destructible,
             direction = entity.direction,
@@ -171,5 +187,6 @@ local dump = {
     dumpLuaGuiElement = dumpLuaGuiElement,
     dumpControlBehavior = dumpControlBehavior,
     dumpEntity = dumpEntity,
+    dumpQuality = dumpQuality,
 }
 return dump
