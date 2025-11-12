@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.2
+Date: 2025-11-16
+  Features:
+    - additional logging function to dump quality
+    - ability to log generated events (made with script.generate_event_name()) like standard events (from defines.events)
+  Info:
+    - bumped version of base game to use newer API
+---------------------------------------------------------------------------------------------------
 Version: 0.2.1
 Date: 2025-10-22
   Bugfixes:
