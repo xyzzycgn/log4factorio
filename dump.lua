@@ -24,7 +24,7 @@ local function fillReverseTypes(types)
 end
 -- ###############################################################
 
---- tranforms a number to the name of the correspondig constant (e.g.  defines.events.on_built_entity)
+--- transforms a number to the name of the correspondig constant (e.g.  defines.events.on_built_entity)
 --- @param types any one of the members from defines_types
 --- @param value number to be tranformed
 local function getTypeName(types, value)
@@ -182,11 +182,26 @@ local function dumpEvent(event)
 end
 -- ###############################################################
 
+--- adds an event - generated with script.generate_event_name() - to the list of standard events (from defines.events)
+--- to make dumpEvent() also work for these events
+--- @param name string name of the generated event
+--- @param eventNumber number return value of script.generate_event_name()
+local function registerGeneratedEvent(name, eventNumber)
+    if not reverseTypes["events"] then
+        fillReverseTypes("events")
+    end
+
+    local rtypes = reverseTypes["events"]
+    rtypes[eventNumber] = name
+end
+-- ###############################################################
+
 local dump = {
     dumpEvent = dumpEvent,
     dumpLuaGuiElement = dumpLuaGuiElement,
     dumpControlBehavior = dumpControlBehavior,
     dumpEntity = dumpEntity,
     dumpQuality = dumpQuality,
+    registerGeneratedEvent = registerGeneratedEvent,
 }
 return dump
