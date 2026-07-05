@@ -62,23 +62,25 @@ end
 ---@param msgOrFunction string|function Message/object to log or a function that returns it
 ---@param func function Function to use for logging (e.g., game.print)
 ---@param sev number? Severity level (optional, defaults to DEFAULT)
-function Log.logBlock(msgOrFunction, func, sev)
+--- @param options string? additional options to control output
+function Log.logBlock(msgOrFunction, func, sev, options)
     sev = sev or DEFAULT
     if (sev >= severity) then
         local msg = (type(msgOrFunction) == "function") and msgOrFunction() or msgOrFunction
-        func(MSG[sev] .. serpent.block(msg))
+        func(MSG[sev] .. serpent.block(msg, options))
     end
 end
 
----Logs a message using serpent.line for single-line object inspection
----@param msgOrFunction string|function Message/object to log or a function that returns it
----@param func function Function to use for logging (e.g., game.print)
----@param sev number? Severity level (optional, defaults to DEFAULT)
-function Log.logLine(msgOrFunction, func, sev)
+--- Logs a message using serpent.line for single-line object inspection
+--- @param msgOrFunction string|function Message/object to log or a function that returns it
+--- @param func function Function to use for logging (e.g., game.print)
+--- @param sev number? Severity level (optional, defaults to DEFAULT)
+--- @param options string? additional options to control output
+function Log.logLine(msgOrFunction, func, sev, options)
     sev = sev or DEFAULT
     if (sev >= severity) then
         local msg = (type(msgOrFunction) == "function") and msgOrFunction() or msgOrFunction
-        func(MSG[sev] .. serpent.line(msg))
+        func(MSG[sev] .. serpent.line(msg, options))
     end
 end
 
@@ -129,8 +131,17 @@ end
 --- @param func function function to use for logging (e.g., game.print)
 --- @param sev number? Severity level
 --- @since 0.2.0
-function Log.logLControlBehavior(cb, func, sev)
+function Log.logControlBehavior(cb, func, sev)
     Log.logBlock(function() return dump.dumpControlBehavior(cb) end, func, sev)
+end
+
+--- logs a ControlBehaviour with more details
+--- @param bpes BlueprintEntity[] to be logged
+--- @param func function function to use for logging (e.g., game.print)
+--- @param sev number? Severity level
+--- @since 0.2.3
+function Log.logBlueprintEntities(bpes, func, sev)
+    Log.logBlock(function() return dump.dumpBlueprintEntities(bpes) end, func, sev)
 end
 
 

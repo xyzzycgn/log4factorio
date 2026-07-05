@@ -9,7 +9,8 @@ local reverseTypes = {}
 --- types for which translation is supported
 local defines_types = {
     gui_type = defines.gui_type,
-    events = defines.events
+    events = defines.events,
+    inventory = defines.inventory
 }
 
 --- fills the translation table
@@ -196,6 +197,69 @@ local function registerGeneratedEvent(name, eventNumber)
 end
 -- ###############################################################
 
+--- @param ips InventoryPosition[]
+local function dumpInventoryPositions(ips)
+    if not ips or not ips.in_inventory or table_size(ips.in_inventory) == 0 then
+        return nil
+    end
+
+    local dips = {}
+    for _, ip in pairs(ips.in_inventory) do
+        local dip = {
+            inventory  = getTypeName("inventory", ip.inventory),
+            stack = ip.stack
+        }
+        dips[#dips + 1] = dip
+    end
+
+    return dips
+end
+-- ###############################################################
+
+--- @param bpip BlueprintInsertPlan[]
+local function dumpBlueprintInsertPlan(bpips)
+    if not bpips or table_size(bpips) == 0 then
+        return nil
+    end
+
+    local dbpips = {}
+
+    for _, bpip in pairs(bpips) do
+        local dpip = {
+            id = bpip.id,
+            items = dumpInventoryPositions(bpip.items)
+        }
+        dbpips[#dbpips + 1] = dpip
+    end
+
+    return dbpips
+end
+-- ###############################################################
+
+--- @param bpe BlueprintEntity
+local function dumpBluePrintEntity(bpe)
+    return bpe and {
+        entity_number = bpe.entity_number,
+        name = bpe.name,
+        quality = bpe.quality,
+        items = dumpBlueprintInsertPlan(bpe.items)
+    } or {}
+end
+-- ###############################################################
+
+--- @param bpes BlueprintEntity[]
+--- @since 0.3.0
+local function dumpBlueprintEntities(bpes)
+    local dbpes = {}
+
+    for _, bpe in pairs(bpes) do
+        dbpes[#dbpes + 1] = dumpBluePrintEntity(bpe)
+    end
+
+    return dbpes
+end
+-- ###############################################################
+
 local dump = {
     dumpEvent = dumpEvent,
     dumpLuaGuiElement = dumpLuaGuiElement,
@@ -203,5 +267,6 @@ local dump = {
     dumpEntity = dumpEntity,
     dumpQuality = dumpQuality,
     registerGeneratedEvent = registerGeneratedEvent,
+    dumpBlueprintEntities = dumpBlueprintEntities
 }
 return dump
