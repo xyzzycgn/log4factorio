@@ -4,6 +4,15 @@ Date: 2026-06-23
   Changes:
     - Upgrade to V 2.1 of base game
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.3
+Date: 2026-07-07
+  Bugfixes:
+    - corrected mispspelled function name (logLControlBehavior -> logControlBehavior)
+  Features:
+    - additional logging function to dump BlueprintEntities
+    - introduced ability to add options to control output (see serpent documentation for details) to logBlock and logLine
+    - added ability to register any type from defines (see https://lua-api.factorio.com/latest/defines.html) and to dump it
+---------------------------------------------------------------------------------------------------
 Version: 0.2.2
 Date: 2025-11-16
   Features:

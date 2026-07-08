@@ -1,6 +1,5 @@
 ---
 --- Created by xyzzycgn.
---- DateTime: 20.03.25 13:21
 ---
 --- Utility functions for dumping several game objects in more detail
 
@@ -9,8 +8,27 @@ local reverseTypes = {}
 --- types for which translation is supported
 local defines_types = {
     gui_type = defines.gui_type,
-    events = defines.events
+    events = defines.events,
+    inventory = defines.inventory
 }
+
+--- add a new type to be supported
+--- @param type string one of the members from defines
+--- @since 0.2.3
+local function registerType(type)
+    if not defines[type] then
+        -- not part of defines
+        return
+    end
+
+    if defines_types[type] then
+        -- already registered
+        return
+    end
+
+    defines_types[type] =  defines[type]
+end
+-- ###############################################################
 
 --- fills the translation table
 --- @param types any one of the members from defines_types
@@ -196,12 +214,81 @@ local function registerGeneratedEvent(name, eventNumber)
 end
 -- ###############################################################
 
+--- @param ips InventoryPosition[]
+--- @since 0.2.3
+local function dumpInventoryPositions(ips)
+    if not ips or not ips.in_inventory or table_size(ips.in_inventory) == 0 then
+        return nil
+    end
+
+    local dips = {}
+    for _, ip in pairs(ips.in_inventory) do
+        local dip = {
+            inventory  = getTypeName("inventory", ip.inventory),
+            stack = ip.stack
+        }
+        dips[#dips + 1] = dip
+    end
+
+    return dips
+end
+-- ###############################################################
+
+--- @param bpip BlueprintInsertPlan[]
+--- @since 0.2.3
+local function dumpBlueprintInsertPlan(bpips)
+    if not bpips or table_size(bpips) == 0 then
+        return nil
+    end
+
+    local dbpips = {}
+
+    for _, bpip in pairs(bpips) do
+        local dpip = {
+            id = bpip.id,
+            items = dumpInventoryPositions(bpip.items)
+        }
+        dbpips[#dbpips + 1] = dpip
+    end
+
+    return dbpips
+end
+-- ###############################################################
+
+--- @param bpe BlueprintEntity
+--- @since 0.2.3
+local function dumpBluePrintEntity(bpe)
+    return bpe and {
+        entity_number = bpe.entity_number,
+        name = bpe.name,
+        quality = bpe.quality,
+        items = dumpBlueprintInsertPlan(bpe.items)
+    } or {}
+end
+-- ###############################################################
+
+--- @param bpes BlueprintEntity[]
+--- @since 0.2.3
+local function dumpBlueprintEntities(bpes)
+    local dbpes = {}
+
+    for _, bpe in pairs(bpes) do
+        dbpes[#dbpes + 1] = dumpBluePrintEntity(bpe)
+    end
+
+    return dbpes
+end
+-- ###############################################################
+
 local dump = {
+    registerType = registerType,
+    getTypeName = getTypeName,
     dumpEvent = dumpEvent,
     dumpLuaGuiElement = dumpLuaGuiElement,
     dumpControlBehavior = dumpControlBehavior,
     dumpEntity = dumpEntity,
     dumpQuality = dumpQuality,
     registerGeneratedEvent = registerGeneratedEvent,
+    dumpBlueprintEntities = dumpBlueprintEntities
 }
 return dump
