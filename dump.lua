@@ -1,6 +1,5 @@
 ---
 --- Created by xyzzycgn.
---- DateTime: 20.03.25 13:21
 ---
 --- Utility functions for dumping several game objects in more detail
 
@@ -12,6 +11,24 @@ local defines_types = {
     events = defines.events,
     inventory = defines.inventory
 }
+
+--- add a new type to be supported
+--- @param type string one of the members from defines
+--- @since 0.2.3
+local function registerType(type)
+    if not defines[type] then
+        -- not part of defines
+        return
+    end
+
+    if defines_types[type] then
+        -- already registered
+        return
+    end
+
+    defines_types[type] =  defines[type]
+end
+-- ###############################################################
 
 --- fills the translation table
 --- @param types any one of the members from defines_types
@@ -198,6 +215,7 @@ end
 -- ###############################################################
 
 --- @param ips InventoryPosition[]
+--- @since 0.2.3
 local function dumpInventoryPositions(ips)
     if not ips or not ips.in_inventory or table_size(ips.in_inventory) == 0 then
         return nil
@@ -217,6 +235,7 @@ end
 -- ###############################################################
 
 --- @param bpip BlueprintInsertPlan[]
+--- @since 0.2.3
 local function dumpBlueprintInsertPlan(bpips)
     if not bpips or table_size(bpips) == 0 then
         return nil
@@ -237,6 +256,7 @@ end
 -- ###############################################################
 
 --- @param bpe BlueprintEntity
+--- @since 0.2.3
 local function dumpBluePrintEntity(bpe)
     return bpe and {
         entity_number = bpe.entity_number,
@@ -248,7 +268,7 @@ end
 -- ###############################################################
 
 --- @param bpes BlueprintEntity[]
---- @since 0.3.0
+--- @since 0.2.3
 local function dumpBlueprintEntities(bpes)
     local dbpes = {}
 
@@ -261,6 +281,8 @@ end
 -- ###############################################################
 
 local dump = {
+    registerType = registerType,
+    getTypeName = getTypeName,
     dumpEvent = dumpEvent,
     dumpLuaGuiElement = dumpLuaGuiElement,
     dumpControlBehavior = dumpControlBehavior,
