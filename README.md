@@ -1,7 +1,7 @@
 # log4factorio:
 Slim mod for logging inspired by log4j (but with much less functionality 😉).
 
-**This is intended as facility to be used in other mods - it doesn't add any feature to the played game.**
+**This is intended as a facility to be used in other mods – it doesn't add any feature to the played game.**
 
 ## Features
 Offers the ability to add log statements which can be enabled/disabled by configuration at _run time_.
@@ -95,7 +95,14 @@ Assuming that the log level has been set to INFO, that produces entries in facto
 
 ` 137.987 Script @__testMod1__/control.lua:16: [INFO] sth happened`
 
-**Hint**: If you want to log to the factorio-current.log, use `function(m)log(m)end` instead of simply `log`. That offers
+**Hints**:
+
+1. If you want to log to the factorio-current.log, use `function(m)log(m)end` instead of simply `log`. That offers
 the advantage that the logged line number is that from the call in the mod using log4factorio and not the line number
 from inside log4factorio, where log() is executed 😉.
+
+1. Due to the mechanisms of factorio when loading mods, all mods using log4factorio use one shared instance during the
+data phase, so it may (will) come to some interferences if these mods try to set different log levels. The effective log 
+level depends on the sequence of loading the mods (and thus is predictable but can't be changed). During the 
+control phase each mod has its own instance and thus can set a different log level than the others.
 
